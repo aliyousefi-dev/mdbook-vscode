@@ -12,12 +12,65 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
+    "viewsContainers": {
+    "activitybar": [
       {
-        "command": "mdbook-vscode.helloWorld",
-        "title": "Hello World"
+        "id": "mdbook-panel",
+        "title": "Mdbook",
+        "icon": "resources/logo.svg"
       }
     ]
+  },
+    "views": {
+      "mdbook-panel": [
+        {
+            "id": "mdbookExplorer",
+            "name": "Summery"
+        },
+        {
+          "id": "mdbookAssets",
+          "name": "Assets"
+      },
+      {
+        "id": "mdbookConfig",
+        "name": "Config"
+    }
+    ]
+},
+"commands": [
+  {
+      "command": "mdBookExplorer.openFile",
+      "title": "Open File"
+  },
+  {
+    "command": "mdBookPreview.open",
+    "title": "Open MdBook Preview"
+  },
+  {
+    "command": "mdBookExplorer.refreshEntry",
+    "title": "Refresh",
+    "icon": "$(extensions-refresh)"
+  },
+  {
+    "command": "mdBookExplorer.createfile",
+    "title": "Refresh",
+    "icon": "$(search-new-editor)"
+  }
+],
+"menus": {
+  "view/title": [
+    {
+      "command": "mdBookExplorer.createfile",
+      "when": "view == mdbookExplorer",
+      "group": "navigation"
+    },
+    {
+      "command": "mdBookExplorer.refreshEntry",
+      "when": "view == mdbookExplorer",
+      "group": "navigation"
+    }
+  ]
+}
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
