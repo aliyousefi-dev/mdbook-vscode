@@ -3,7 +3,7 @@
 This is the README for your extension "mdbook-vscode". After writing up a brief description, we recommend including the following sections.
 
 
-![preview](./preview.png)
+![preview](./docs/preview.png)
 
 
 ## Features
@@ -12,6 +12,9 @@ This is the README for your extension "mdbook-vscode". After writing up a brief 
 - Preview Mdbook
 - Build commands
 
+
+## How works
+![workflow](./docs/workflow.png)
 
 ## Under Development
 
