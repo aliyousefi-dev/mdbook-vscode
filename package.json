@@ -24,64 +24,61 @@
     "views": {
       "mdbook-viewContainer": [
         {
-          "id": "summeryExplorer",
-          "name": "Summery Explorer"
-        },
-        {
-          "id": "mdbookAssets",
-          "name": "Assets"
-        },
-        {
-          "id": "mdbookConfig",
-          "name": "Config"
+          "id": "mdexplorer",
+          "name": "mdbook explorer"
         }
       ]
     },
     "commands": [
       {
-        "command": "mdBookExplorer.openFile",
-        "title": "Open File"
-      },
-      {
-        "command": "mdBookPreview.open",
+        "command": "mdcommands.mdpreview.open",
         "title": "Open MdBook Preview"
       },
       {
-        "command": "mdBookExplorer.refreshEntry",
-        "title": "Refresh",
+        "command": "mdcommands.mdexplorer.refresh",
+        "title": "Refresh Explorer",
         "icon": "$(extensions-refresh)"
       },
       {
-        "command": "mdBookExplorer.createfile",
+        "command": "mdcommands.mdexplorer.newcontent",
         "title": "Create File",
         "icon": "$(search-new-editor)"
       },
       {
-        "command": "summeryExplorer.rename",
-        "title": "Rename"
+        "command": "mdcommands.mdexplorer.renamecontent",
+        "title": "Rename File"
+      },
+      {
+        "command": "mdcommands.mdexplorer.deletecontent",
+        "title": "Delete File"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "mdBookExplorer.createfile",
-          "when": "view == summeryExplorer",
+          "command": "mdcommands.mdexplorer.newcontent",
+          "when": "view == mdexplorer",
           "group": "navigation"
         },
         {
-          "command": "mdBookExplorer.refreshEntry",
-          "when": "view == summeryExplorer",
+          "command": "mdcommands.mdexplorer.refresh",
+          "when": "view == mdexplorer",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "summeryExplorer.rename",
-          "when": "viewItem == renameable",
-          "group": "inline"
+          "command": "mdcommands.mdexplorer.renamecontent",
+          "when": "view == summeryExplorer && viewItem == renameable"
+        },
+        {
+          "command": "mdcommands.mdexplorer.deletecontent",
+          "when": "view == summeryExplorer && viewItem == renameable"
         }
       ]
-    }
+    },
+    "keybindings": [
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

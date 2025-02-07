@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
-export class SummeryExplorer implements vscode.TreeDataProvider<Node>, vscode.TreeDragAndDropController<Node> {
-    dropMimeTypes = ['application/vnd.code.tree.summeryExplorer'];
+export class MdExplorer implements vscode.TreeDataProvider<Node>, vscode.TreeDragAndDropController<Node> {
+    dropMimeTypes = ['application/vnd.code.tree.mdExplorer'];
     dragMimeTypes = ['text/uri-list'];
 
     private tree: Record<string, Record<string, {}>> = { 'A': { 'A1': {}, 'A2': {} }, 'B': { 'B1': {}, 'B2': {} } };
@@ -10,15 +10,20 @@ export class SummeryExplorer implements vscode.TreeDataProvider<Node>, vscode.Tr
     readonly onDidChangeTreeData: vscode.Event<Node | undefined> = this._onDidChangeTreeData.event;
 
     constructor(context: vscode.ExtensionContext) {
-        console.log("Initializing TestViewDragAndDrop...");
-        const view = vscode.window.createTreeView('summeryExplorer', { treeDataProvider: this, dragAndDropController: this });
+        console.log("Initializing MdExplorer...");
+        const view = vscode.window.createTreeView('mdExplorer', { treeDataProvider: this, dragAndDropController: this });
         context.subscriptions.push(view);
 
-        context.subscriptions.push(vscode.commands.registerCommand('summeryExplorer.rename', async (node: Node) => {
+        // Register the rename command to handle file renaming
+        context.subscriptions.push(vscode.commands.registerCommand('mdbook.action.mdexplorer.rename', async (node: Node) => {
             const newName = await vscode.window.showInputBox({ prompt: "Enter new name", value: node.key });
             if (newName) {
                 this.renameNode(node.key, newName);
             }
+        }));
+
+        context.subscriptions.push(vscode.commands.registerCommand('mdbook.action.mdexplorer.delete', async (node: Node) => {
+            vscode.window.showInformationMessage(`Deleted ${node.key}`);
         }));
     }
 
@@ -39,7 +44,7 @@ export class SummeryExplorer implements vscode.TreeDataProvider<Node>, vscode.Tr
         return { 
             label: element.key, 
             collapsibleState: hasChildren ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
-            contextValue: "renameable"
+            contextValue: "renameable" // Ensure this matches the context value in package.json
         };
     }
 
@@ -56,7 +61,6 @@ export class SummeryExplorer implements vscode.TreeDataProvider<Node>, vscode.Tr
                 }
             }
         }
-
         vscode.window.showInformationMessage(`Renamed ${oldKey} to ${newKey}`);
         this._onDidChangeTreeData.fire(undefined); // Refresh the explorer
     }
@@ -67,7 +71,7 @@ export class SummeryExplorer implements vscode.TreeDataProvider<Node>, vscode.Tr
 
     async handleDrag(source: Node[], treeDataTransfer: vscode.DataTransfer) {
         console.log("handleDrag called with source:", source);
-        treeDataTransfer.set('application/vnd.code.tree.summeryExplorer', new vscode.DataTransferItem(source));
+        treeDataTransfer.set('application/vnd.code.tree.mdExplorer', new vscode.DataTransferItem(source));
     }
 }
 
