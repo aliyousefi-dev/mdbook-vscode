@@ -8,9 +8,9 @@ This is the README for your extension "mdbook-vscode". After writing up a brief 
 
 ## Features
 
-- Summery Explorer
-- Preview Mdbook
-- Build commands
+- auto update summery file
+- internal mdbook preview
+- help commands for working with mdbook.exe
 
 
 ## How works
